@@ -1,0 +1,17 @@
+function autofill_formulas_1() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('black_friday');
+  
+  // Loop through 20 times (rows 51, 58, ..., 51 + 7*n)
+  for (var i = 0; i < 20; i++) {
+    var targetRow = 51 + (i * 7);  // Starting row 51 and adding 7 for each iteration
+    var sourceRow = 44 + (i * 6);  // Starting row 44 and adding 6 for each iteration
+    
+    // Loop through columns D to I (columns 4 to 9)
+    for (var col = 4; col <= 9; col++) {
+      var formula = '=' + sheet.getRange(1, col + 17).getA1Notation().replace(/[0-9]/g, '') + sourceRow; // Column U:Z corresponds to column 21-26 (U=21, Z=26)
+      
+      // Set the formula in the target cell
+      sheet.getRange(targetRow, col).setFormula(formula);
+    }
+  }
+}
